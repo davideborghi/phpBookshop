@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">PHPBOOKSHOP</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -14,6 +14,19 @@
       </div>
       
     </div>
-    <button class="btn btn-outline-light pull-right" type="submit">Login</button>
+    <?php 
+      if (isset($_SESSION['CURRENT_USER'])){?>
+      Bentornato 
+        <button class="btn btn-outline-light pull-right">Profilo</button>
+        <button class="btn btn-outline-light pull-right">Logout</button>  
+      <?php
+      }
+      else{?>
+        <button class="btn btn-outline-light pull-right">Login</button>
+        <button class="btn btn-outline-light pull-right">Registrati</button>  
+      <?php
+      }
+    ?>
+    
   </div>
 </nav>
