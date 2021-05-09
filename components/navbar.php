@@ -19,10 +19,9 @@
       
       if (isset($_SESSION['CURRENT_USER'])){
         $user = $_SESSION['CURRENT_USER'];
-        var_dump($user);
         ?>
       
-      <span class="nav-link active">Bentornato </span>
+      <span class="nav-link active">Bentornato <?= $user->nome ?> <?= $user->cognome?></span>
       <form action="<?=PROJECT_FOLDER?>pages/login.php" method="POST">
         <button class="btn btn-outline-light pull-right">Profilo</button>
         
