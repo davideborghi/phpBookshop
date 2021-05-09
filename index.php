@@ -2,6 +2,7 @@
 
 <?php 
     require_once('constants.php');
+    require_once(PROJECT_PATH.'services/sessioneService.php');
  ?>
 <head>
     <title>
@@ -13,12 +14,13 @@
 
 <body>
     <?php
-    
+    require(PROJECT_PATH.'/components/navbar.php');
+    //session_start();
     require(PROJECT_PATH.'/services/utenteService.php');
-    $utenteService = new UtenteService();
-    $user = $utenteService->login('utente', 'password');
-    var_dump($user);
-     require(PROJECT_PATH.'/components/navbar.php') ?>
+    //$utenteService = new UtenteService();
+    //$user =$_SESSION['CURRENT_USER'];
+    //var_dump('index' . $user);
+     ?> 
     <div class="container-fluid">
         <div class="row">
 

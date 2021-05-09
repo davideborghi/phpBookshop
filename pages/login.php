@@ -1,14 +1,25 @@
 <?php 
+
     require_once('../constants.php');
     //echo PROJECT_PATH.'services/utenteService.php';
+    require_once(PROJECT_PATH.'services/sessioneService.php');
     require_once(PROJECT_PATH.'services/utenteService.php');
+    var_dump($_POST);
     if(isset($_POST['email']) && isset($_POST['password'])){
         $utenteService = new UtenteService();
         $login = $utenteService->login($_POST['email'], $_POST['password']);
-        $_SESSION['CURRENT_USER'] = $login;
-        session_start();
-        header('Location: /');
         
+        if (isset($login) && $login != "Login_FAILED"){
+            
+            $_SESSION['CURRENT_USER'] = $login;
+            //die(var_dump($_SESSION['CURRENT_USER']));
+            var_dump($_SESSION['CURRENT_USER']);
+            
+        }
+    }else{
+        if(isset($_POST['Logout'])){
+            logout();
+        }
     }
 ?>
 <html>
@@ -24,8 +35,25 @@
 </head>
 
 <body>
-    <?php require(PROJECT_PATH.'/components/navbar.php') ?>
+    <?php require(PROJECT_PATH.'/components/navbar.php');
+    if (isset($_SESSION['CURRENT_USER'])){
+        $_SESSION['CURRENT_USER'] = $login;
 
+        
+        $redirectTo = 'Location: '.PROJECT_FOLDER.'pages/profilo.php';
+        header($redirectTo);
+        
+            exit;
+        ?>
+
+        <?php
+        
+    }
+    else{
+
+    
+    ?>
+    
     <form action="<?=PROJECT_FOLDER?>pages/login.php" method="POST">
         <div class="container mt-10">
             <div class="row">
@@ -66,7 +94,7 @@
         </div>
     </form>
 
-
+<?php } ?>
 
 
 

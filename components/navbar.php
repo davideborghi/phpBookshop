@@ -14,11 +14,20 @@
       </div>
       
     </div>
+    
     <?php 
-      if (isset($_SESSION['CURRENT_USER'])){?>
-      <span class="nav-link active">Bentornato</span>
+      
+      if (isset($_SESSION['CURRENT_USER'])){
+        $user = $_SESSION['CURRENT_USER'];
+        var_dump($user);
+        ?>
+      
+      <span class="nav-link active">Bentornato </span>
+      <form action="<?=PROJECT_FOLDER?>pages/login.php" method="POST">
         <button class="btn btn-outline-light pull-right">Profilo</button>
-        <button class="btn btn-outline-light pull-right">Logout</button>  
+        
+          <input type="submit" Name="Logout" Value="Logout" class="btn btn-outline-light pull-right" />  
+        </form>
       <?php
       }
       else{?>
@@ -27,6 +36,7 @@
       <?php
       }
     ?>
+    
     
   </div>
 </nav>
