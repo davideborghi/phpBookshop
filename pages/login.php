@@ -19,6 +19,9 @@
     }else{
         if(isset($_POST['Logout'])){
             logout();
+            $redirectTo = 'Location: '.PROJECT_FOLDER;
+            header($redirectTo);
+            exit;
         }
     }
 ?>
