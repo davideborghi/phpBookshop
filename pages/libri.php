@@ -1,7 +1,7 @@
 <html>
 
 <?php 
-    require_once('constants.php');
+    require_once('../constants.php');
     require_once(PROJECT_PATH.'services/sessioneService.php');
  ?>
 <head>
@@ -34,8 +34,14 @@
             <link rel="stylesheet" href="<?= PROJECT_FOLDER?>assets/libroComponent.css" />
             <?php require(PROJECT_PATH.'services/libroService.php') ?>
             <?php 
-                $libroService = new LibroService();
+            $libroService = new LibroService();
+            if (isset($_GET['idAutore'])){
+                $libri = $libroService->getLibriByAutore($_GET['idAutore']);
+            }else{
+                
                 $libri = $libroService->getAllLibri();
+            }
+                
                 foreach ($libri as $libro) {
             ?>
             <div class="col-md-4">

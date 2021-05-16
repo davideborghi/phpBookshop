@@ -1,10 +1,11 @@
 <?php 
 
     require_once('../constants.php');
-    //echo PROJECT_PATH.'services/utenteService.php';
-    require_once(PROJECT_PATH.'services/utenteService.php');
     require_once(PROJECT_PATH.'services/sessioneService.php');
-    echo var_dump($_POST);
+    //echo PROJECT_PATH.'services/utenteService.php';
+    //require_once(PROJECT_PATH.'services/utenteService.php');
+    
+    
     if(isset($_POST['ModificaProfilo'])){
         $uteService = new UtenteService();
         $updateRes = $uteService->aggiornaUtente($_POST['vecchiaEmail'],$_POST['email'], $_POST['nome'], $_POST['cognome']);

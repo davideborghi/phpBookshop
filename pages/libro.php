@@ -1,6 +1,6 @@
 <?php 
     require_once('../constants.php');
-
+    require_once(PROJECT_PATH.'services/sessioneService.php');
 
 $idLibro = $_GET['id'];
 
@@ -34,7 +34,7 @@ $librotrovato = $libroService->getById($idLibro);
         </div>
         <div class="row">
             <div class="col-12 text-center">
-                <h1>Recensioni</h1>
+                <h1>Autori</h1>
             </div>
         </div>
     </div>

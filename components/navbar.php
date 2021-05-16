@@ -8,9 +8,11 @@
       <div class="navbar-nav">
         <a href="<?=PROJECT_FOLDER?>" class="nav-link active" aria-current="page" href="#">Home</a>
         <a class="nav-link" href="#">Libri</a>
-        <a class="nav-link" href="#">Autori</a>
+        <a class="nav-link" href="<?=PROJECT_FOLDER?>pages/autori.php">Autori</a>
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Generi</a>
-        
+        <?php if (isset($_SESSION['CURRENT_USER'])){ ?>
+        <a href="<?=PROJECT_FOLDER?>pages/profilo.php" class="btn btn-outline-light pull-right">Profilo</a>  
+        <?php } ?>
       </div>
       
     </div>
@@ -22,9 +24,8 @@
         ?>
       
       <span class="nav-link active">Bentornato <?= $user->nome ?> <?= $user->cognome?></span>
+      
       <form action="<?=PROJECT_FOLDER?>pages/login.php" method="POST">
-        <button class="btn btn-outline-light pull-right">Profilo</button>
-        
           <input type="submit" Name="Logout" Value="Logout" class="btn btn-outline-light pull-right" />  
         </form>
       <?php
