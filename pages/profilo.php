@@ -13,7 +13,6 @@
             $_SESSION['CURRENT_USER'] = new Utente($_POST["nome"], $_POST["cognome"], $_POST["email"], '');
         }
     }
-    //var_dump($user);
     
 ?>
 <html>
