@@ -1,5 +1,5 @@
 <?php
-require (PROJECT_PATH.'/models/libro.php');
+require_once (PROJECT_PATH.'/models/libro.php');
 
 class LibroService{
     
@@ -28,6 +28,20 @@ class LibroService{
             
           }
     }
+    function upsertLibro($id, $titolo,$editore, $urlAnteprimaCopertina){
+        require_once (PROJECT_PATH.'services/dbConnection.php');
+        if($id != 0){
+            $connection = openConnection();
+            $sql ="UPDATE LIBRI SET titolo = '$titolo', editore = '$editore', urlanteprimacopertina ='$urlAnteprimaCopertina' where id = $id";
+            
+            return $connection->query($sql);
+        }
+        else{
+            $connection = openConnection();
+            $sql ="INSERT INTO LIBRI (titolo, editore, urlanteprimacopertina) VALUES ('$titolo','$editore','$urlAnteprimaCopertina')";
+            return $connection->query($sql);
+        }
+    }
     function getById($id){
         require_once (PROJECT_PATH.'services/dbConnection.php');
         $connection = openConnection();
@@ -38,7 +52,6 @@ class LibroService{
             require_once (PROJECT_PATH.'models/libro.php');
             
             while ($row = $result->fetch_assoc()){
-                echo var_dump($row);
                 $libro=$this->buildLibroFromDbRow($row);
             }
             return $libro;

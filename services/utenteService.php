@@ -1,21 +1,14 @@
 <?php
 
  class UtenteService{
-     private $connection;
-
-     function __constructor(){
-        require_once (PROJECT_PATH.'services/dbConnection.php');
-        $this->connection = openConnection();
-        
-    }
     function getConnection(){
         
     }
     function login($email, $password){
-        //require (PROJECT_PATH.'/moks/userMock.php');
-        
+        require_once (PROJECT_PATH.'services/dbConnection.php');
+        $connection = openConnection();
         $sql = "SELECT * FROM UTENTI WHERE EMAIL='".$email."' AND PASSWORD = '".$password."'";
-        $result = $this->connection->query($sql);
+        $result = $connection->query($sql);
         if ($result->num_rows > 0) {
             // output data of each row
             require_once (PROJECT_PATH.'models/utente.php');
@@ -28,10 +21,11 @@
         }
     }
     function aggiornaUtente($vecchiaEmail, $nuovaEmail, $nome, $cognome){
-        
+        require_once (PROJECT_PATH.'services/dbConnection.php');
+        $connection = openConnection();
         $sql = "UPDATE UTENTI SET EMAIL = '$nuovaEmail', NOME='$nome', COGNOME = '$cognome' where email = '$vecchiaEmail'";
-        echo $sql;
-        return $this->connection->query($sql);
+        
+        return $connection->query($sql);
     }
     function checkLogin(){
 
@@ -49,7 +43,13 @@
         }
         else{            
             echo "KO";
-        }
+        }       
+    }
+    function registraUtente($email, $cognome,$nome,$password){
+        require_once (PROJECT_PATH.'services/dbConnection.php');
+        $connection = openConnection();
+        $sql = "INSERT INTO UTENTI (email, password, nome,cognome)VALUES('$email','$password','$nome','$cognome')";
+        return $connection->query($sql);
         
     }
 }

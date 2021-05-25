@@ -4,14 +4,21 @@
     require_once(PROJECT_PATH.'services/sessioneService.php');
     //echo PROJECT_PATH.'services/utenteService.php';
     require_once(PROJECT_PATH.'services/utenteService.php');
-    
-    
-    if(isset($_POST["email"])){
-        //verifica se è stata fatta chiamata ajax per la disponibilità dell'utenza
-        $uteService = new UtenteService();
-        $exists= $uteService->nomeUtenteDisponibile($_POST['email']);
-        die();
+    $uteService = new UtenteService();
+    if (isset($_POST["RegistraProfilo"])){
+        $registrationResult = $uteService->registraUtente($_POST["email"], $_POST["cognome"],$_POST["nome"],$_POST["password"]);
+        
     }
+    else{
+        if(isset($_POST["email"])){
+            //verifica se è stata fatta chiamata ajax per la disponibilità dell'utenza
+            
+            $exists= $uteService->nomeUtenteDisponibile($_POST['email']);
+            die();
+    
+        }
+    }    
+    
     //var_dump($user);
     
 ?>
@@ -26,14 +33,19 @@
     <script type="text/javascript">
     $(document).ready(function() {
         
-        
+        <?php 
+        if(isset($registrationResult) && $registrationResult == TRUE){
+            
+            echo '$("#registrazioneOkDiv").removeClass("d-none");';
+        }
+        ?>
 
         $("#email").change(function(){
             emailChange();
         });
         $("#confermaEmail").change(function(){
             emailChange();
-        })
+        });
         function emailChange(){
             if ($("#email").val().trim() != $("#confermaEmail").val().trim()){
                 
@@ -48,10 +60,13 @@
                         if (data == "KO"){
                             $("#mailErrorRow").removeClass('d-none');
                             $("#emailGiaRegistrata").removeClass('d-none');
+                            
+                            $("#confermaRegistrazioneBtn").prop("disabled", true);
                         }
                         else{
                             $("#mailErrorRow").addClass('d-none');
                             $("#emailGiaRegistrata").addClass('d-none');
+                            $("#confermaRegistrazioneBtn").prop("disabled", false);
                         }
                     });
             }
@@ -66,12 +81,15 @@
             if ($("#password").val().trim() != $("#confermaPassword").val().trim()){
                 
                 $("#password-row-error").removeClass('d-none');
+                $("#confermaRegistrazioneBtn").prop("disabled", true);
                 
             }else{
                 $("#password-row-error").addClass('d-none');
+                $("#confermaRegistrazioneBtn").prop("disabled", false);
                 
             }
         }
+
     });
 
     </script>
@@ -83,6 +101,13 @@
     <div class="container">
         <div class="row">
             <div class="col">
+                <div class="alert alert-success d-none" id="registrazioneOkDiv" role="alert">
+                    Registrazione effettuata con successo. Effettua il login
+                </div> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
                 <h1 class="text-center">
                     Inserisci i tuoi dati:
                 </h1>
@@ -90,7 +115,7 @@
 
         </div>
 
-        <form method='post' id="registration-form" action="<?=PROJECT_FOLDER?>pages/profilo.php">
+        <form method='post' id="registration-form" action="<?=PROJECT_FOLDER?>pages/registrati.php">
         <div class="row">
         
             <div class="col-4">
@@ -154,7 +179,7 @@
         </div>
         <div class="row">
             <div class="col-4">
-                Password:
+                Conferma Password:
             </div>
             <div class="col-8">
                 <input type="password" id="confermaPassword" class="form-control" name="confermaPassword" value="" />
@@ -171,7 +196,7 @@
             <div class="col-4">
             </div>
             <div class="col-8">
-                <input type="submit" class="btn btn-success" name="ModificaProfilo" value="Conferma Registrazione" />
+                <input type="submit" class="btn btn-success" id="confermaRegistrazioneBtn" disabled="true" name="RegistraProfilo" value="Conferma Registrazione" />
             </div>
         </div>
         </form>
