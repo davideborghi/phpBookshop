@@ -19,15 +19,29 @@ class AutoreService{
             require_once (PROJECT_PATH.'models/autore.php');
             $autori = [];
             while ($row = $result->fetch_assoc()){
-                echo var_dump($row);
                 $autori[]=new Autore($row["id"],$row["nome"], $row["urlfotoautore"]);
             }
             return $autori;
-            
-            //return new Utente($row["nome"], $row["cognome"], $row["email"], '');
           }
         else {
-            //return "Login_FAILED";
+        }
+    }
+    function getAutoriOfLibro($idLibro){
+        
+        require_once (PROJECT_PATH.'services/dbConnection.php');
+        $connection = openConnection();
+        $sql = "SELECT * FROM AUTORI autori INNER JOIN REL_LIBRO_AUTORE rel on rel.idautore=autori.id WHERE rel.idLibro=$idLibro";
+        //echo $sql;
+        $result = $connection->query($sql);
+        //echo $result;
+        if ($result->num_rows > 0) {
+            // output data of each row
+            require_once (PROJECT_PATH.'models/libro.php');
+            $autori = [];
+            while ($row = $result->fetch_assoc()){
+                $autori[]=new Autore($row["id"],$row["nome"], $row["urlfotoautore"]);
+            }
+            return $autori;
         }
     }
 

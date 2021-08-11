@@ -22,7 +22,7 @@
     <?php if(isset($user)){ ?>
         <div class="row">
             <div class="col-4">
-            <a href="<?= PROJECT_FOLDER?>/pages/formLibro.php" class="btn btn-success mt-10">
+            <a href="<?= PROJECT_FOLDER?>pages/formLibro.php" class="btn btn-success mt-10">
                     Inserisci libro
                 </a>
             </div>

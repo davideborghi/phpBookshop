@@ -20,6 +20,7 @@ CREATE TABLE AUTORI(
 );
 INSERT INTO AUTORI (id, Nome, UrlFotoAutore) VALUES (NULL, 'Joanne Rowling', 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS3bDP-AbnH7l2pjO-SwJkEFQu9dxDE6V8wyJ_5x_lfkVpTMA80'),
  (NULL, 'Clive Cussler', 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSax7uUri9y3q873L3Jnwqic7PsrprOFZFs0HBhNLFO215kuIvx');
+    (NULL, 'Stephen King', 'https://www.filo.news/__export/1600631826092/sites/claro/img/2020/09/20/stephen_king.jpg_423682103.jpg');
 
  CREATE TABLE LIBRI(
      id int not null primary key AUTO_INCREMENT,

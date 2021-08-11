@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a href="<?=PROJECT_FOLDER?>" class="nav-link active" aria-current="page" href="#">Home</a>
-        <a class="nav-link" href="#">Libri</a>
+        <a class="nav-link" href="<?=PROJECT_FOLDER?>pages/libri.php">Libri</a>
         <a class="nav-link" href="<?=PROJECT_FOLDER?>pages/autori.php">Autori</a>
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Generi</a>
         <?php if (isset($_SESSION['CURRENT_USER'])){ ?>

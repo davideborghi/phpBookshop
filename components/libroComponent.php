@@ -12,6 +12,9 @@
                 <?=$libro->titolo?>
             </div>
             <div class="editore-libro">
+                <strong>
+                    Editore:
+                </strong>
                 <?=$libro->editore?>
             </div>
             <a href="<?=PROJECT_FOLDER?>pages/libro.php?id=<?=$libro->id?>" class="btn btn-primary" />Scheda libro</a>

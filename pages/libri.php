@@ -11,6 +11,7 @@
     <script type="text/javascript" src="<?=PROJECT_FOLDER?>lib/bootstrap-5.0.0-beta3-dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="<?=PROJECT_FOLDER?>lib/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="<?= PROJECT_FOLDER?>assets/styles.css" />
+    
 </head>
 
 <body>
@@ -22,7 +23,7 @@
     <?php if(isset($user)){ ?>
         <div class="row">
             <div class="col-4">
-                <a href="<?= PROJECT_FOLDER?>/pages/formLibro.php" class="btn btn-success mt-10">
+                <a href="<?= PROJECT_FOLDER?>pages/formLibro.php" class="btn btn-success mt-10">
                     Inserisci libro
                 </a>
             </div>
@@ -41,6 +42,8 @@
                 
                 $libri = $libroService->getAllLibri();
             }
+                if (isset($libri)){
+
                 
                 foreach ($libri as $libro) {
             ?>
@@ -50,6 +53,7 @@
             <?php
 
             }
+        }
             ?>
         </div>
 

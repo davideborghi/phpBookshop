@@ -6,7 +6,11 @@
     //echo PROJECT_PATH.'services/utenteService.php';
     //require_once(PROJECT_PATH.'services/utenteService.php');
     require_once(PROJECT_PATH.'services/libroService.php');
+    require_once(PROJECT_PATH.'services/autoreService.php');
     $libroService = new LibroService();
+    $autoreService = new AutoreService();
+    $tuttiAutori = $autoreService->getAllAutori();
+    $autoriDelLibro =[];
     if (isset($_POST["SalvaLibro"])){
         $updateRes = $libroService->upsertLibro($_POST['id'], $_POST['titolo'],$_POST['editore'], $_POST['urlAnteprimaCopertina']);
     }
@@ -15,9 +19,11 @@
     if (isset($_GET['id'])){
         $idLibro = $_GET['id'];
         
-        $test = $libroService->getById($idLibro);
-        $libroTrovato = $test;
+        $libroTrovato = $libroService->getById($idLibro);
         $queryID = "?id=$idLibro";
+        $autoriDelLibro =  $autoreService->getAutoriOfLibro($idLibro);
+        $libroTrovato->autori = $autoriDelLibro;
+        
     }
     
     
@@ -38,10 +44,15 @@
     <?php require(PROJECT_PATH.'/components/navbar.php');?>
 
     <div class="container">
+    
         <div class="row">
             <div class="col">
                 <h1 class="text-center">
-                    Inserisci nuovo libro
+                    <?php if(isset($_GET['id'])){
+                        echo 'Modifica';
+                    }else{
+                        echo 'Inserisci nuovo';
+                    } ?> libro
                 </h1>
             </div>
 
@@ -88,6 +99,32 @@
             <div class="col-8">
                 <input type="text" class="form-control" name="urlAnteprimaCopertina" value="<?= $libroTrovato->urlAnteprimaCopertina?>" />
             </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                Autori
+            </div>
+        </div>
+        <div class="row">
+            <?php
+                foreach($tuttiAutori as $autore){
+                    $ischecked="";
+                    if ($libroTrovato->isAutore($autore->id)){
+                        $ischecked = "checked";
+                    }
+
+            ?>
+            <div class="col-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="<?= $autore->id?>" id="<?= $autore->id?>" <?=$ischecked?>>
+                    <label class="form-check-label" for="flexCheckChecked">
+                    <?= $autore->nome?>
+                    </label>
+                </div>
+                
+            </div>
+            <?php } //chiude foreach
+             ?>
         </div>
         <div class="row">
             <div class="col-4">
