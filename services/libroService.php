@@ -42,6 +42,19 @@ class LibroService{
             return $connection->query($sql);
         }
     }
+    function aggingiAutore($idLibro, $idAutore){
+        require_once (PROJECT_PATH.'services/dbConnection.php');
+        $connection = openConnection();
+        $sql ="INSERT INTO `rel_libro_autore` (`idlibro`, `idautore`) VALUES ('$idLibro', '$idAutore')";
+        return $connection->query($sql);
+    }
+    function eliminaAutore($idLibro, $idAutore){
+        require_once (PROJECT_PATH.'services/dbConnection.php');
+        $connection = openConnection();
+        $sql ="DELETE FROM `rel_libro_autore` WHERE idlibro = $idLibro AND idautore  = $idAutore";
+        
+        return $connection->query($sql);
+    }
     function getById($id){
         require_once (PROJECT_PATH.'services/dbConnection.php');
         $connection = openConnection();
