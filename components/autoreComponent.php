@@ -13,7 +13,15 @@
             <div class="editore-libro">
                 
             </div>
-            <a href="<?=PROJECT_FOLDER?>pages/libri.php?idAutore=<?=$autore->id?>" class="btn btn-primary" />Vai ai libri dell'autore</a>
+            <div>
+                <a href="<?=PROJECT_FOLDER?>pages/libri.php?idAutore=<?=$autore->id?>" class="btn btn-primary" />Vai ai libri dell'autore</a>
+            </div>
+            <?php if(isset($user)){ ?>
+            <div class="mt-10">
+            <a href="<?=PROJECT_FOLDER?>pages/formAutore.php?id=<?=$autore->id?>" class="btn btn-warning" />Modifica Autore</a>
+            </div>
+            <?php } ?>
+            
         </div>
     </div>
 </div>

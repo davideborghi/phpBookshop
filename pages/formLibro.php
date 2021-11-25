@@ -3,30 +3,36 @@
     require_once('../constants.php');
     require_once(PROJECT_PATH.'services/sessioneService.php');
     require_once (PROJECT_PATH.'/models/libro.php');
-    //echo PROJECT_PATH.'services/utenteService.php';
-    //require_once(PROJECT_PATH.'services/utenteService.php');
     require_once(PROJECT_PATH.'services/libroService.php');
     require_once(PROJECT_PATH.'services/autoreService.php');
     $libroService = new LibroService();
     $autoreService = new AutoreService();
+    if ((isset($_POST['action']) && $_POST['action']=='EliminaAutore')){
+        $libroService->eliminaAutore($_POST['idLibro'],$_POST['idAutore']);
+        die('OK');
+    }
+    if(isset($_POST["action"])){
+        if ($_POST["action"] == 'AggiungiAutore'){
+            $libroService->aggingiAutore($_POST['idLibro'],$_POST['idAutore']);
+            die('OK');
+        }
+    }
+    
     $tuttiAutori = $autoreService->getAllAutori();
     $autoriDelLibro =[];
     if (isset($_POST["SalvaLibro"])){
         $updateRes = $libroService->upsertLibro($_POST['id'], $_POST['titolo'],$_POST['editore'], $_POST['urlAnteprimaCopertina']);
     }
     $libroTrovato = new Libro(0, '','','');    
+    $libroTrovato->autori = [];
     $queryID="";
     if (isset($_GET['id'])){
         $idLibro = $_GET['id'];
-        
         $libroTrovato = $libroService->getById($idLibro);
         $queryID = "?id=$idLibro";
         $autoriDelLibro =  $autoreService->getAutoriOfLibro($idLibro);
         $libroTrovato->autori = $autoriDelLibro;
-        
     }
-    
-    
 ?>
 <html>
 
@@ -35,9 +41,7 @@
     <title>
         MondaMari
     </title>
-    <script type="text/javascript" src="<?=PROJECT_FOLDER?>lib/bootstrap-5.0.0-beta3-dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="<?=PROJECT_FOLDER?>lib/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="<?= PROJECT_FOLDER?>assets/styles.css" />
+    <?php require(PROJECT_PATH.'/components/scripts.php');?>
 </head>
 
 <body>
@@ -102,7 +106,14 @@
         </div>
         <div class="row">
             <div class="col-4">
-                Autori
+            </div>
+            <div class="col-8">
+                <input type="submit" class="btn btn-success" name="SalvaLibro" value="Salva Libro" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                Autori: <em>Attenzione: gli autori vengono aggiornati automaticamente ad ogni click fatto</em>
             </div>
         </div>
         <div class="row">
@@ -116,7 +127,7 @@
             ?>
             <div class="col-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="<?= $autore->id?>" id="<?= $autore->id?>" <?=$ischecked?>>
+                    <input class="form-check-input" onclick="clickedAuthor(<?= $autore->id?>)" type="checkbox" value="<?= $autore->id?>" id="<?= $autore->id?>" <?=$ischecked?>>
                     <label class="form-check-label" for="flexCheckChecked">
                     <?= $autore->nome?>
                     </label>
@@ -126,15 +137,41 @@
             <?php } //chiude foreach
              ?>
         </div>
-        <div class="row">
-            <div class="col-4">
-            </div>
-            <div class="col-8">
-                <input type="submit" class="btn btn-success" name="SalvaLibro" value="Salva Libro" />
-            </div>
-        </div>
+        
         </form>
     </div>
+    <script>
+    function clickedAuthor(idAutore){
+        console.log(idAutore);
+        console.log();
+        var isChecked = $("#"+idAutore).prop('checked');
+        console.log(isChecked);
+        var idLibro = <?=$idLibro?>;
+        console.log(isChecked, idAutore, idLibro);
+        if (isChecked){
+            //have to insert the association
+            $.post("<?=PROJECT_FOLDER?>pages/formLibro.php", {action:'AggiungiAutore',idLibro: idLibro, idAutore:idAutore})
+                .done(function( data ) {
+                
+            }); 
+        }
+        else{
+            //have to delete the association
+            $.ajax({
+                url: '<?=PROJECT_FOLDER?>pages/formLibro.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {action:'EliminaAutore',idLibro: idLibro, idAutore:idAutore},
+                error: function(response) {
+                    console.log('ok');
+                }
+                
+            });
+       
+        }
+
+    }
+    </script>
 
 </body>
 

@@ -26,6 +26,36 @@ class AutoreService{
         else {
         }
     }
+    function upsertAutore($id, $nome, $urlFoto){
+        require_once (PROJECT_PATH.'services/dbConnection.php');
+        if($id != 0){
+            $connection = openConnection();
+            $sql ="UPDATE AUTORI SET nome = '$nome', urlfotoautore = '$urlFoto' where id = $id";
+            
+            return $connection->query($sql);
+        }
+        else{
+            $connection = openConnection();
+            $sql ="INSERT INTO AUTORI (nome,urlfotoautore) VALUES ('$nome','$urlFoto')";
+            return $connection->query($sql);
+        }
+    
+    }
+    function getById($id){
+        require_once (PROJECT_PATH.'services/dbConnection.php');
+        $connection = openConnection();
+        $sql = "SELECT * FROM AUTORI WHERE ID='$id'";
+        $result = $connection->query($sql);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            require_once (PROJECT_PATH.'models/autore.php');
+            
+            while ($row = $result->fetch_assoc()){
+                $autore=new Autore($row["id"],$row["nome"], $row["urlfotoautore"]);
+            }
+            return $autore;
+        }
+    }
     function getAutoriOfLibro($idLibro){
         
         require_once (PROJECT_PATH.'services/dbConnection.php');

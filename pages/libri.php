@@ -54,6 +54,9 @@
 
             }
         }
+        else{
+            echo 'Nessun Libro';
+        }
             ?>
         </div>
 

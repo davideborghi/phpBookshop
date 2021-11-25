@@ -10,7 +10,7 @@ $libroService = new LibroService();
 $librotrovato = $libroService->getById($idLibro);
 $autoreService = new AutoreService();
 $autori = $autoreService->getAutoriOfLibro($idLibro);
-var_dump($autori);
+
 ?>
 <html>
 
@@ -45,20 +45,18 @@ var_dump($autori);
                 
                 <?php if(isset($autori)){
                     foreach($autori as $autore){
-                } ?>
+                 ?>
                 <div>
                     <?= $autore->nome?>
                 </div>
-                    <?php } ?>
+                    <?php 
+                 }
+                 } ?>
                 
             </div>
 
         </div>
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1>Commenti</h1>
-            </div>
-        </div>
+
     </div>
 
 
